@@ -11,4 +11,15 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/cert-spammer-0.1.8/cert-spammer-0.1.8.tgz
     version: 0.1.8
-generated: "2023-05-31T00:52:23.425733735Z"
+  tce-all-in-one:
+  - apiVersion: v2
+    appVersion: main
+    created: "2023-05-31T00:59:27.661496175Z"
+    description: A Helm chart for TCE
+    digest: ee971f9998a029fddf68686ba398a01f338b489087be1e0f887d35a4756bcba4
+    name: tce-all-in-one
+    type: application
+    urls:
+    - https://github.com/topos-network/helm-charts/releases/download/tce-all-in-one-0.2.4/tce-all-in-one-0.2.4.tgz
+    version: 0.2.4
+generated: "2023-05-31T00:59:27.661502575Z"
