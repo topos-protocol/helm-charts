@@ -22,4 +22,15 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-all-in-one-0.2.4/tce-all-in-one-0.2.4.tgz
     version: 0.2.4
-generated: "2023-05-31T00:59:27.661502575Z"
+  tce-tmp-storage:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-05-31T01:07:25.101345213Z"
+    description: A Helm chart for TCE
+    digest: 385e1cc15aeb9686c0bf77db35b0fd436d8f81d5f9c432d9f20b190750e5443f
+    name: tce-tmp-storage
+    type: application
+    urls:
+    - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
+    version: 0.1.3
+generated: "2023-05-31T01:07:25.101350613Z"
