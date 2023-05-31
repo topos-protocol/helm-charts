@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  cert-spammer:
+  - apiVersion: v2
+    appVersion: main
+    created: "2023-05-31T00:52:23.425721735Z"
+    description: A Helm chart for cert-spammer
+    digest: b97ed5fc1f4700ff9c819c9566b613bc338ac51bd2f24a101eb1ce6bd299a605
+    name: cert-spammer
+    type: application
+    urls:
+    - https://github.com/topos-network/helm-charts/releases/download/cert-spammer-0.1.8/cert-spammer-0.1.8.tgz
+    version: 0.1.8
+generated: "2023-05-31T00:52:23.425733735Z"
