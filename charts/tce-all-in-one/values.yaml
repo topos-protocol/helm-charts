@@ -1,21 +1,34 @@
 # Default values for tce-all-in-one.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-replicas: 5
 
+replicas: 5
 # mode can be (boot | peer)
 mode: boot
 
 # deploy a single TCE node per K8s node
 singleTCENodePerK8sNode: true
 
+host: nowhere.com
+# create ingress (true | false)
+ingress: false
+
+acme:
+  email: nobody@nowhere.com
+  # acme issuer type (staging | production)
+  environment: staging
+
 ports:
   http: 1340
   p2p: 9090
 
 image:
-  repository: ghcr.io/topos-network/topos
-  tag: main-tce
+  repository: nobody
+  tag: main
+
+credentials:
+  username: nobody
+  password: secret
 
 env:
   RUST_LOG: warn,topos=warn
