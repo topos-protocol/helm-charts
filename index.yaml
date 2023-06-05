@@ -3,6 +3,16 @@ entries:
   cert-spammer:
   - apiVersion: v2
     appVersion: main
+    created: "2023-06-05T13:15:43.808446382Z"
+    description: A Helm chart for cert-spammer
+    digest: feb520b735c4be42fdd78be57c86d1b462f714463e64c6bd0cf3762c8a19fdfe
+    name: cert-spammer
+    type: application
+    urls:
+    - https://github.com/topos-network/helm-charts/releases/download/cert-spammer-0.1.9/cert-spammer-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: main
     created: "2023-05-31T00:52:23.425721735Z"
     description: A Helm chart for cert-spammer
     digest: b97ed5fc1f4700ff9c819c9566b613bc338ac51bd2f24a101eb1ce6bd299a605
@@ -12,6 +22,16 @@ entries:
     - https://github.com/topos-network/helm-charts/releases/download/cert-spammer-0.1.8/cert-spammer-0.1.8.tgz
     version: 0.1.8
   tce-all-in-one:
+  - apiVersion: v2
+    appVersion: main
+    created: "2023-06-05T13:15:44.003132701Z"
+    description: A Helm chart for TCE
+    digest: fce95922d8c34c161cbe215bda94abcc9089d54418600ab19397e72ba526136d
+    name: tce-all-in-one
+    type: application
+    urls:
+    - https://github.com/topos-network/helm-charts/releases/download/tce-all-in-one-0.2.5/tce-all-in-one-0.2.5.tgz
+    version: 0.2.5
   - apiVersion: v2
     appVersion: main
     created: "2023-05-31T00:59:27.661496175Z"
@@ -25,6 +45,16 @@ entries:
   tce-tmp-storage:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2023-06-05T13:15:44.218980489Z"
+    description: A Helm chart for Kubernetes
+    digest: 6acf5f9478755eb040054cec432a556b08671162f3d765b5ac37b3772b26d666
+    name: tce-tmp-storage
+    type: application
+    urls:
+    - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.4/tce-tmp-storage-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2023-05-31T01:07:25.101345213Z"
     description: A Helm chart for TCE
     digest: 385e1cc15aeb9686c0bf77db35b0fd436d8f81d5f9c432d9f20b190750e5443f
@@ -33,4 +63,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2023-05-31T01:07:25.101350613Z"
+generated: "2023-06-05T13:15:44.219100909Z"
