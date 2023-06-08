@@ -6,6 +6,7 @@ metadata:
   name: {{ $.Values.mode }}-{{ $index }}
   labels:
     app: {{ $.Values.mode }}-{{ $index }}
+    node: {{ $.Values.mode }}
 spec:
   type: ClusterIP
   ports:
@@ -21,6 +22,10 @@ spec:
       targetPort: graphql
       protocol: TCP
       name: graphql
+    - port: {{ $.Values.ports.metrics }}
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
   selector:
     app: {{ $.Values.mode }}-{{ $index }}
   sessionAffinity: ClientIP
@@ -47,6 +52,10 @@ spec:
       targetPort: graphql
       protocol: TCP
       name: graphql
+    - port: {{ $.Values.ports.metrics }}
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
   selector:
     node: {{ $.Values.mode }}
   sessionAffinity: ClientIP

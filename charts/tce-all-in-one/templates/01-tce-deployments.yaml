@@ -17,6 +17,7 @@ spec:
       labels:
         app: {{ $.Values.mode }}-{{ $index }}
         node: {{ $.Values.mode }}
+        stack: tce
     spec:
       hostname: {{ $.Values.mode }}-{{ $index }}
       {{ if $.Values.singleTCENodePerK8sNode }}
@@ -25,44 +26,60 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: node
+                  - key: stack
                     operator: In
                     values:
-                      - {{ $.Values.mode }}
+                      - tce
               topologyKey: "kubernetes.io/hostname"
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: size
+                operator: In
+                values:
+                - large
+      tolerations:
+      - key: "size"
+        operator: "Equal"
+        value: "large"
+        effect: "NoExecute"
       {{ end }}
       containers:
         - name: {{ $.Values.mode }}
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
           imagePullPolicy: Always
+
+          {{ if eq $.Values.mode "boot" }}
           livenessProbe:
             exec:
               command:
                 - /bin/bash
                 - -c
                 - topos tce push-peer-list --node http://localhost:1340 --format json /tmp/shared/peer_ids.json && topos tce status --node http://localhost:1340
-            initialDelaySeconds: 15
-            periodSeconds: 15
             failureThreshold: 10
-          startupProbe:
-            {{ if eq $.Values.mode "boot" }}
-            exec:
-              command:
-              - /bin/bash
-              - -c
-              - topos tce push-peer-list --node http://localhost:1340 --format json /tmp/shared/peer_ids.json
-            {{ else }}
+            initialDelaySeconds: 30
+          {{ end }}
+
+          {{ if eq $.Values.mode "peer" }}
+          readinessProbe:
             exec:
               command:
                 - /bin/bash
                 - -c
                 - topos tce push-peer-list --node http://localhost:1340 --format json /tmp/shared/peer_ids.json && topos tce status --node http://localhost:1340
-            {{ end }}
             initialDelaySeconds: 10
-            periodSeconds: 10
             timeoutSeconds: 10
-            failureThreshold: 30
-            successThreshold: 1
+            failureThreshold: 10
+          {{ end }}
+
+          startupProbe:
+            tcpSocket:
+              port: p2p
+
+            periodSeconds: 10
+            failureThreshold: 10
+
           args: ["{{ $.Values.mode }}", "tce", "run"]
           ports:
             - name: p2p
@@ -73,6 +90,9 @@ spec:
               protocol: TCP
             - name: graphql
               containerPort: {{ $.Values.ports.graphql }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ $.Values.ports.metrics }}
               protocol: TCP
           volumeMounts:
             - mountPath: /tmp/shared
@@ -114,6 +134,10 @@ spec:
               value: "{{ $.Values.env.TCE_DELIVERY_THRESHOLD }}"
             - name: TOPOS_OTLP_TAGS
               value: "{{ $.Values.env.TOPOS_OTLP_TAGS }}"
+            - name: TOPOS_RUN_ID
+              value: "{{ $.Values.env.TOPOS_RUN_ID }}"
+            - name: TOPOS_RUN_NUMBER
+              value: "{{ $.Values.env.TOPOS_RUN_NUMBER }}"
             - name: OTLP_BATCH_SCHEDULED_DELAY
               value: "{{ $.Values.env.OTLP_BATCH_SCHEDULED_DELAY }}"
             - name: OTLP_BATCH_MAX_CONCURRENT_EXPORTS
@@ -128,6 +152,29 @@ spec:
               value: "{{ $.Values.env.OTEL_EXPORTER_OTLP_COMPRESSION }}"
             - name: OTEL_EXPORTER_OTLP_TIMEOUT
               value: "{{ $.Values.env.OTEL_EXPORTER_OTLP_TIMEOUT }}"
+            - name: TOPOS_BROADCAST_MAX_BUFFER_SIZE
+              value: "{{ $.Values.env.TOPOS_BROADCAST_MAX_BUFFER_SIZE }}"
+            - name: TOPOS_MINIMUM_TCE_CLUSTER_SIZE
+              value: "{{ $.Values.env.TOPOS_MINIMUM_TCE_CLUSTER_SIZE }}"
+            - name: TOPOS_GOSSIP_BATCH_SIZE
+              value: "4000"
+            - name: TOPOS_DOUBLE_ECHO_COMMAND_CHANNEL_SIZE
+              value: "1000000"
+            - name: TOPOS_PROTOCOL_CHANNEL_SIZE
+              value: "1000000"
+            - name: BROADCAST_TASK_COMPLETION_CHANNEL_SIZE
+              value: "1000000"
+            - name: TOPOS_API_COMMAND_CHANNEL_SIZE
+              value: "100000"
+            - name: TCE_EVENT_STREAM_BUFFER
+              value: "1000000"
+            - name: TCE_COMMAND_STREAM_BUFFER_SIZE
+              value: "1000000"
+            - name: TOPOS_STORAGE_COMMAND_CHANNEL_SIZE
+              value: "1000000"
+            - name: TOPOS_GOSSIP_INTERVAL
+              value: "200"
+
       volumes:
       - name: shared
         persistentVolumeClaim:

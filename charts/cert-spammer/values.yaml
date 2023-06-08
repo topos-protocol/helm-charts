@@ -2,12 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 image:
-  repository: ghcr.io/topos-network/topos
+  repository: ghcr.io/topos-protocol/topos
   tag: main-network
 
+replicas: 1
+
 env:
-  TOPOS_NETWORK_SPAMMER_CERT_PER_BATCH: "1"
-  TOPOS_NETWORK_SPAMMER_BATCH_INTERVAL: "4000"
+  TOPOS_NETWORK_SPAMMER_CERT_PER_BATCH: "10"
+  TOPOS_NETWORK_SPAMMER_BATCH_INTERVAL: "1000"
   TOPOS_NETWORK_SPAMMER_NUMBER_OF_SUBNETS: "1"
 
   OTLP_BATCH_SCHEDULED_DELAY: "1500"
