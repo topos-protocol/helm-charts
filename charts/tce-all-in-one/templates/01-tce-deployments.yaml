@@ -71,6 +71,9 @@ spec:
             - name: http
               containerPort: {{ $.Values.ports.http }}
               protocol: TCP
+            - name: graphql
+              containerPort: {{ $.Values.ports.graphql }}
+              protocol: TCP
           volumeMounts:
             - mountPath: /tmp/shared
               name: shared

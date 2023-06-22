@@ -17,6 +17,10 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ $.Values.ports.graphql }}
+      targetPort: graphql
+      protocol: TCP
+      name: graphql
   selector:
     app: {{ $.Values.mode }}-{{ $index }}
   sessionAffinity: ClientIP
@@ -39,6 +43,10 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ $.Values.ports.graphql }}
+      targetPort: graphql
+      protocol: TCP
+      name: graphql
   selector:
     node: {{ $.Values.mode }}
   sessionAffinity: ClientIP
