@@ -21,6 +21,7 @@ acme:
 ports:
   http: 1340
   p2p: 9090
+  graphql: 4000
 
 image:
   repository: nobody
