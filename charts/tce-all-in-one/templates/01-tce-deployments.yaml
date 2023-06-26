@@ -43,22 +43,21 @@ spec:
                 - /bin/bash
                 - -c
                 - topos tce push-peer-list --node http://localhost:1340 --format json /tmp/shared/peer_ids.json && topos tce status --node http://localhost:1340
-            initialDelaySeconds: 15
-            periodSeconds: 15
             failureThreshold: 10
+            initialDelaySeconds: 30
           {{ end }}
 
-          {{ if eq $.Values.mode "boot" }}
-           readinessProbe:
-             exec:
-               command:
-                 - /bin/bash
-                 - -c
-                 - topos tce push-peer-list --node http://localhost:1340 --format json /tmp/shared/peer_ids.json && topos tce status --node http://localhost:1340
-             initialDelaySeconds: 10
-             timeoutSeconds: 10
-             failureThreshold: 10
-          {{{ end }}}
+          {{ if eq $.Values.mode "peer" }}
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - topos tce push-peer-list --node http://localhost:1340 --format json /tmp/shared/peer_ids.json && topos tce status --node http://localhost:1340
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 10
+          {{ end }}
 
           startupProbe:
             tcpSocket:
@@ -77,6 +76,9 @@ spec:
               protocol: TCP
             - name: graphql
               containerPort: {{ $.Values.ports.graphql }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ $.Values.ports.metrics }}
               protocol: TCP
           volumeMounts:
             - mountPath: /tmp/shared
@@ -131,9 +133,9 @@ spec:
             - name: OTEL_EXPORTER_OTLP_TIMEOUT
               value: "{{ $.Values.env.OTEL_EXPORTER_OTLP_TIMEOUT }}"
             - name: TOPOS_BROADCAST_MAX_BUFFER_SIZE
-               value: "{{ $.Values.env.TOPOS_BROADCAST_MAX_BUFFER_SIZE }}"
-             - name: TOPOS_MINIMUM_TCE_CLUSTER_SIZE
-               value: "{{ $.Values.env.TOPOS_MINIMUM_TCE_CLUSTER_SIZE }}"
+              value: "{{ $.Values.env.TOPOS_BROADCAST_MAX_BUFFER_SIZE }}"
+            - name: TOPOS_MINIMUM_TCE_CLUSTER_SIZE
+              value: "{{ $.Values.env.TOPOS_MINIMUM_TCE_CLUSTER_SIZE }}"
 
       volumes:
       - name: shared
