@@ -6,6 +6,7 @@ metadata:
   name: {{ $.Values.mode }}-{{ $index }}
   labels:
     app: {{ $.Values.mode }}-{{ $index }}
+    node: {{ $.Values.mode }}
 spec:
   type: ClusterIP
   ports:
@@ -36,6 +37,7 @@ metadata:
   name: {{ $.Values.mode }}
   labels:
     app: {{ $.Values.mode }}
+    node: {{ $.Values.mode }}
 spec:
   type: ClusterIP
   ports:
