@@ -94,6 +94,8 @@ spec:
               value: "{{ $.Values.env.TCE_API_ADDR }}"
             - name: TCE_GRAPHQL_API_ADDR
               value: "{{ $.Values.env.TCE_GRAPHQL_API_ADDR }}"
+            - name: TCE_METRICS_API_ADDR
+              value: "{{ $.Values.env.TCE_METRICS_API_ADDR }}"
             - name: TOPOS_OTLP_SERVICE_NAME
               value: "{{ $.Values.env.TOPOS_OTLP_SERVICE_NAME }}"
             - name: TOPOS_OTLP_AGENT
