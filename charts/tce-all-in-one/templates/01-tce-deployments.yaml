@@ -17,6 +17,7 @@ spec:
       labels:
         app: {{ $.Values.mode }}-{{ $index }}
         node: {{ $.Values.mode }}
+        stack: tce
     spec:
       hostname: {{ $.Values.mode }}-{{ $index }}
       {{ if $.Values.singleTCENodePerK8sNode }}
@@ -25,10 +26,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: node
+                  - key: stack
                     operator: In
                     values:
-                      - {{ $.Values.mode }}
+                      - tce
               topologyKey: "kubernetes.io/hostname"
       {{ end }}
       containers:
