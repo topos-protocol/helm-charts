@@ -101,6 +101,8 @@ spec:
               value: "{{ $.Values.env.TCE_API_ADDR }}"
             - name: TCE_GRAPHQL_API_ADDR
               value: "{{ $.Values.env.TCE_GRAPHQL_API_ADDR }}"
+            - name: TCE_METRICS_API_ADDR
+              value: "{{ $.Values.env.TCE_METRICS_API_ADDR }}"
             - name: TOPOS_OTLP_SERVICE_NAME
               value: "{{ $.Values.env.TOPOS_OTLP_SERVICE_NAME }}"
             - name: TOPOS_OTLP_AGENT
@@ -137,6 +139,14 @@ spec:
               value: "{{ $.Values.env.TOPOS_BROADCAST_MAX_BUFFER_SIZE }}"
             - name: TOPOS_MINIMUM_TCE_CLUSTER_SIZE
               value: "{{ $.Values.env.TOPOS_MINIMUM_TCE_CLUSTER_SIZE }}"
+            - name: TOPOS_GOSSIP_BATCH_SIZE
+              value: "100"
+            - name: TOPOS_DOUBLE_ECHO_COMMAND_CHANNEL_SIZE
+              value: "10000"
+            - name: TCE_EVENT_STREAM_BUFFER
+              value: "10000"
+            - name: TOPOS_STORAGE_COMMAND_CHANNEL_SIZE
+              value: "10000"
 
       volumes:
       - name: shared
