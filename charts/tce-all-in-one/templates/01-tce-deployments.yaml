@@ -31,6 +31,19 @@ spec:
                     values:
                       - tce
               topologyKey: "kubernetes.io/hostname"
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: size
+                operator: In
+                values:
+                - large
+      tolerations:
+      - key: "size"
+        operator: "Equal"
+        value: "large"
+        effect: "NoExecute"
       {{ end }}
       containers:
         - name: {{ $.Values.mode }}
