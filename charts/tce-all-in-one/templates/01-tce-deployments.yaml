@@ -134,6 +134,10 @@ spec:
               value: "{{ $.Values.env.TCE_DELIVERY_THRESHOLD }}"
             - name: TOPOS_OTLP_TAGS
               value: "{{ $.Values.env.TOPOS_OTLP_TAGS }}"
+            - name: TOPOS_RUN_ID
+              value: "{{ $.Values.env.TOPOS_RUN_ID }}"
+            - name: TOPOS_RUN_NUMBER
+              value: "{{ $.Values.env.TOPOS_RUN_NUMBER }}"
             - name: OTLP_BATCH_SCHEDULED_DELAY
               value: "{{ $.Values.env.OTLP_BATCH_SCHEDULED_DELAY }}"
             - name: OTLP_BATCH_MAX_CONCURRENT_EXPORTS
