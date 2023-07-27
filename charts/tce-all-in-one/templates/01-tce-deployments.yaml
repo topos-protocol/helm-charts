@@ -157,15 +157,19 @@ spec:
             - name: TOPOS_MINIMUM_TCE_CLUSTER_SIZE
               value: "{{ $.Values.env.TOPOS_MINIMUM_TCE_CLUSTER_SIZE }}"
             - name: TOPOS_GOSSIP_BATCH_SIZE
-              value: "500"
+              value: "800"
             - name: TOPOS_DOUBLE_ECHO_COMMAND_CHANNEL_SIZE
               value: "1000000"
-            - name: TOPOS_DOUBLE_ECHO_EVENT_CHANNEL_SIZE
-              value: "2048"
-            - name: GRPC_COMMAND_CHANNEL_SIZE
-              value: "2048"
+            - name: TOPOS_PROTOCOL_CHANNEL_SIZE
+              value: "1000000"
+            - name: BROADCAST_TASK_COMPLETION_CHANNEL_SIZE
+              value: "100000"
+            - name: TOPOS_API_COMMAND_CHANNEL_SIZE
+              value: "100000"
             - name: TCE_EVENT_STREAM_BUFFER
               value: "1000000"
+            - name: TCE_COMMAND_STREAM_BUFFER_SIZE
+              value: "100000"
             - name: TOPOS_STORAGE_COMMAND_CHANNEL_SIZE
               value: "1000000"
             - name: TOPOS_GOSSIP_INTERVAL
