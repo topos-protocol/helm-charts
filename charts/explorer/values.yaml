@@ -5,6 +5,7 @@
 host: nowhere.com
 
 acme:
+  # acme issuer type (staging | production)
   environment: staging
 
 image:
