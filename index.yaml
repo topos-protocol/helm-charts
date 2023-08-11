@@ -3,6 +3,16 @@ entries:
   cert-manager-issuer:
   - apiVersion: v2
     appVersion: main
+    created: "2023-08-11T22:53:01.782816632Z"
+    description: A Helm chart for cert-manager issuer
+    digest: 935e89bf6f8de7760858262d47cae74c5441c486b8c77925cc6a177d50f1ef43
+    name: cert-manager-issuer
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/cert-manager-issuer-0.0.6/cert-manager-issuer-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
+    appVersion: main
     created: "2023-08-11T19:32:23.09585285Z"
     description: A Helm chart for cert-manager issuer
     digest: 23725ac860d66c40fc6e38131760c2ee7bc1133bd6fa2b02b19600543ba77fee
@@ -226,4 +236,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2023-08-11T22:45:00.907697604Z"
+generated: "2023-08-11T22:53:01.782857333Z"
