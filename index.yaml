@@ -21,6 +21,17 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/cert-spammer-0.1.8/cert-spammer-0.1.8.tgz
     version: 0.1.8
+  explorer:
+  - apiVersion: v2
+    appVersion: main
+    created: "2023-08-11T16:38:57.817961142Z"
+    description: A Helm chart for Topos Explorer
+    digest: 4bbadbf0db6b5cac0eb6957ea458edd7cba03b2d9af97d964f65759ddbcdb284
+    name: explorer
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/explorer-0.1.0/explorer-0.1.0.tgz
+    version: 0.1.0
   tce-all-in-one:
   - apiVersion: v2
     appVersion: main
@@ -114,4 +125,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2023-06-30T18:34:27.677075338Z"
+generated: "2023-08-11T16:38:57.817987342Z"
