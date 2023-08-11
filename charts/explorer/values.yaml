@@ -1,0 +1,20 @@
+# Default values for tce-all-in-one.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+host: nowhere.com
+
+acme:
+  email: nobody@nowhere.com
+  # acme issuer type (staging | production)
+  environment: staging
+
+image:
+  repository: nobody
+  tag: main
+
+containerPorts:
+  http: 80
+
+ports:
+  http: 80
