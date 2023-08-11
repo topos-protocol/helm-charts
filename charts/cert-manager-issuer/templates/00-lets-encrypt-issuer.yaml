@@ -15,7 +15,7 @@ spec:
       dns01:
         route53:
           region: {{ $.Values.region }}
-          role: {{ $.Values.role }}
+          hostedZoneID: {{ $.Values.hostedZoneID }}
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -24,14 +24,14 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: {{ $.Values.dnsZone }}
+    email: {{ $.Values.acme.email }}
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
     - selector:
         dnsZones:
-          - "example.com"
+          - {{ $.Values.dnsZone }}
       dns01:
         route53:
           region: {{ $.Values.region }}
-          role: {{ $.Values.role }}
+          hostedZoneID: {{ $.Values.hostedZoneID }}
