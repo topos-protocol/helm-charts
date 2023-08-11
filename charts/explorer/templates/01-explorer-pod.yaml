@@ -8,8 +8,8 @@ spec:
   restartPolicy: Always
   containers:
     - name: explorer
-      image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+      image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
       imagePullPolicy: Always
       ports:
         - name: http
-          containerPort: "{{ $.Values.containerPorts.http }}"
+          containerPort: {{ .Values.containerPorts.http }}

@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "{{ .Values.host }}"
+        - {{ .Values.host }}
       secretName: "{{ .Values.host }}-secret-tls"
   rules:
-    - host: "{{ .Values.host }}"
+    - host: {{ .Values.host }}
       http:
         paths:
           - path: /
