@@ -4,7 +4,7 @@
 
 region: us-east-1
 hostedZoneID: none
-dnsZones: nowhere.com
+dnsZone: nowhere.com
 
 acme:
   email: nobody@nowhere.com
