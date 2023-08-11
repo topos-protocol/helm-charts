@@ -4,13 +4,6 @@
 
 host: nowhere.com
 
-ingress: false
-
-acme:
-  email: nobody@nowhere.com
-  # acme issuer type (staging | production)
-  environment: staging
-
 image:
   repository: nobody
   tag: main
