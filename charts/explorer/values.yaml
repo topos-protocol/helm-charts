@@ -4,6 +4,9 @@
 
 host: nowhere.com
 
+acme:
+  environment: staging
+
 image:
   repository: nobody
   tag: main
