@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: explorer
+  labels:
+    app: explorer
+spec:
+  restartPolicy: Always
+  containers:
+    - name: explorer
+      image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+      imagePullPolicy: Always
+      ports:
+        - name: http
+          containerPort: "{{ $.Values.containerPorts.http }}"
