@@ -64,6 +64,16 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: main
+    created: "2023-08-11T19:10:49.679864506Z"
+    description: A Helm chart for cert-manager issuer
+    digest: 87208ace46e9f656a7ba921150848710258eebe319dc800277ac4c3a5a272f6a
+    name: explorer
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/explorer-0.0.2/explorer-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: main
     created: "2023-08-11T19:00:29.247071347Z"
     description: A Helm chart for cert-manager issuer
     digest: c28fcab3d0dc1bf2320f87f6218b09d1e8a8d95a404423269c9efbf1f5e290ce
@@ -165,4 +175,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2023-08-11T19:00:29.247348049Z"
+generated: "2023-08-11T19:10:49.679952207Z"
