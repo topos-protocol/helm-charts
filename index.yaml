@@ -56,6 +56,16 @@ entries:
   explorer:
   - apiVersion: v2
     appVersion: main
+    created: "2023-08-14T10:31:51.957850925Z"
+    description: A Helm chart for Topos Explorer
+    digest: c7e8f6008507efc257a2db68af79e87718ee7e1012bd995b93e72db83e0611a5
+    name: explorer
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/explorer-0.1.7/explorer-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: main
     created: "2023-08-11T22:45:00.907572901Z"
     description: A Helm chart for Topos Explorer
     digest: 7f7b7d890b462335fe67be4032c085bea160732c7647fe4babbf59703c2bcca0
@@ -247,4 +257,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2023-08-14T08:56:59.412913511Z"
+generated: "2023-08-14T10:31:51.957911626Z"
