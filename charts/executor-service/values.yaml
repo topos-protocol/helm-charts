@@ -1,0 +1,25 @@
+# Default values for tce-all-in-one.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+host: nowhere.com
+
+acme:
+  # acme issuer type (staging | production)
+  environment: staging
+
+image:
+  repository: nobody
+  tag: main
+
+containerPorts:
+  http: 3000
+
+ports:
+  http: 80
+
+env:
+  AUTH0_AUDIENCE: "${AUTH0_AUDIENCE}"
+  AUTH0_ISSUER_URL: "${AUTH0_ISSUER_URL}"
+  PRIVATE_KEY: "${PRIVATE_KEY}"
+  TOPOS_SUBNET_ENDPOINT: "localhost:${TOPOS_HOST_PORT}"
