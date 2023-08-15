@@ -26,3 +26,9 @@ spec:
           value: "6379"
         - name: TOPOS_SUBNET_ENDPOINT
           value: {{ .Values.env.TOPOS_SUBNET_ENDPOINT }}
+        - name: SUBNET_REGISTRATOR_CONTRACT_ADDRESS
+          value: {{ .Values.env.SUBNET_REGISTRATOR_CONTRACT_ADDRESS }}
+        - name: TOPOS_CORE_CONTRACT_ADDRESS
+          value: {{ .Values.env.TOPOS_CORE_CONTRACT_ADDRESS }}
+        - name: TRACING_OTEL_COLLECTOR_ENDPOINT
+          value: {{ .Values.env.TRACING_OTEL_COLLECTOR_ENDPOINT }}
