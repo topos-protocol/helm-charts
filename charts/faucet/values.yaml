@@ -1,0 +1,27 @@
+# Default values for tce-all-in-one.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+host: nowhere.com
+
+acme:
+  # acme issuer type (staging | production)
+  environment: staging
+
+image:
+  repository: nobody
+  tag: main
+
+containerPorts:
+  http: 3000
+
+ports:
+  http: 80
+
+env:
+  ELASTIC_APM_ENDPOINT: "${ELASTIC_APM_ENDPOINT}"
+  ELASTIC_APM_TOKEN: "${ELASTIC_APM_TOKEN}"
+  PRIVATE_KEY: "${PRIVATE_KEY}"
+  TRACING_SERVICE_NAME: "${TRACING_SERVICE_NAME}"
+  TRACING_SERVICE_VERSION: "${TRACING_SERVICE_VERSION}"
+  THROTTLER_TTL_SECONDS: "${THROTTLER_TTL_SECONDS}"
