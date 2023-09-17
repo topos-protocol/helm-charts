@@ -39,5 +39,7 @@ spec:
               value: {{ .Values.env.SUBNET_REGISTRATOR_CONTRACT_ADDRESS }}
             - name: TOPOS_CORE_PROXY_CONTRACT_ADDRESS
               value: {{ .Values.env.TOPOS_CORE_PROXY_CONTRACT_ADDRESS }}
-            - name: TRACING_OTEL_COLLECTOR_ENDPOINT
-              value: {{ .Values.env.TRACING_OTEL_COLLECTOR_ENDPOINT }}
+            - name: ELASTIC_APM_ENDPOINT
+              value: {{ .Values.env.ELASTIC_APM_ENDPOINT }}
+            - name: ELASTIC_APM_TOKEN
+              value: {{ .Values.env.ELASTIC_APM_TOKEN }}

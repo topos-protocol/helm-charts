@@ -31,5 +31,3 @@ spec:
               value: {{ .Values.env.AUTH0_CLIENT_SECRET }}
             - name: AUTH0_ISSUER_URL
               value: {{ .Values.env.AUTH0_ISSUER_URL }}
-            - name: TRACING_OTEL_COLLECTOR_ENDPOINT
-              value: {{ .Values.env.TRACING_OTEL_COLLECTOR_ENDPOINT }}
