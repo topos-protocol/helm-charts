@@ -238,6 +238,16 @@ entries:
   faucet:
   - apiVersion: v2
     appVersion: main
+    created: "2023-09-18T11:48:49.39477251Z"
+    description: A Helm chart for Faucet
+    digest: d42eddac799cc4a26d44c7549f4426fb9a27c5898be3126f1809ff5d3d247cc0
+    name: faucet
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/faucet-0.1.1/faucet-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: main
     created: "2023-09-13T13:03:57.696854305Z"
     description: A Helm chart for Faucet
     digest: 807d9aac34112187e5bb63b6e4faebc8d0c69ea0c97c266d32d4263974c1a8c7
@@ -339,4 +349,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2023-09-17T17:27:03.162655731Z"
+generated: "2023-09-18T11:48:49.394950009Z"
