@@ -1,0 +1,8 @@
+# Default values.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+env:
+  FLEET_ENROLLMENT_TOKEN: "FLEET_ENROLLMENT_TOKEN"
+  FLEET_INSECURE: "false"
+  FLEET_URL: "FLEET_URL"
