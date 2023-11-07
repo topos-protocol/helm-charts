@@ -9,6 +9,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.host }}
+        - {{ .Values.telemetry.receivers.otlp.host }}
       secretName: "{{ .Values.host }}-secret-tls"
   rules:
     - host: {{ .Values.host }}
@@ -21,3 +22,13 @@ spec:
                 name: dapp-frontend-erc20
                 port:
                   name: http
+    - host: {{ .Values.telemetry.receivers.otlp.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dapp-frontend-erc20
+                port:
+                  name: otlp-receiver

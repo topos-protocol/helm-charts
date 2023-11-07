@@ -16,6 +16,16 @@ spec:
     spec:
       restartPolicy: Always
       containers:
+        - name: otel-collector
+          image: otel/opentelemetry-collector-contrib:0.88.0
+          ports:
+            - name: otlp-receiver
+              containerPort: 4318
+            - name: prom-exporter
+              containerPort: 8889
+          volumeMounts:
+            - name: otel-collector-config-vol
+              mountPath: /etc/otelcol-contrib
         - name: executor-service
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: Always
@@ -39,7 +49,16 @@ spec:
               value: {{ .Values.env.SUBNET_REGISTRATOR_CONTRACT_ADDRESS }}
             - name: TOPOS_CORE_PROXY_CONTRACT_ADDRESS
               value: {{ .Values.env.TOPOS_CORE_PROXY_CONTRACT_ADDRESS }}
-            - name: ELASTIC_APM_ENDPOINT
-              value: {{ .Values.env.ELASTIC_APM_ENDPOINT }}
-            - name: ELASTIC_APM_TOKEN
-              value: {{ .Values.env.ELASTIC_APM_TOKEN }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.env.OTEL_EXPORTER_OTLP_ENDPOINT }}
+            - name: OTEL_SERVICE_NAME
+              value: {{ .Values.env.OTEL_SERVICE_NAME }}
+            - name: OTEL_SERVICE_VERSION
+              value: {{ .Values.env.OTEL_SERVICE_VERSION }}
+      volumes:
+        - configMap:
+            name: otel-collector-conf
+            items:
+              - key: otel-collector-config
+                path: config.yaml
+          name: otel-collector-config-vol

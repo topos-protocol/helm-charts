@@ -11,6 +11,14 @@ spec:
       port: {{ .Values.ports.http }}
       targetPort: http
       protocol: TCP
+    - name: otlp-receiver
+      port: 4318
+      targetPort: otlp-receiver
+      protocol: TCP
+    - name: prom-exporter
+      port: 8889
+      targetPort: prom-exporter
+      protocol: TCP
   selector:
     app: executor-service
   sessionAffinity: ClientIP
