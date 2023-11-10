@@ -3,14 +3,16 @@ kind: Ingress
 metadata:
   name: dapp-frontend-erc20
   annotations:
-    kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.acme.environment }}"
 spec:
+  ingressClassName: "{{ .Values.ingress.class }}"
   tls:
     - hosts:
         - {{ .Values.host }}
-        - {{ .Values.telemetry.receivers.otlp.host }}
       secretName: "{{ .Values.host }}-secret-tls"
+    - hosts:
+        - {{ .Values.telemetry.receivers.otlp.host }}
+      secretName: "{{ .Values.telemetry.receivers.otlp.host }}-secret-tls"
   rules:
     - host: {{ .Values.host }}
       http:

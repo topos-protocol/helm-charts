@@ -43,8 +43,10 @@ spec:
               value: "redis"
             - name: REDIS_PORT
               value: "6379"
-            - name: TOPOS_SUBNET_ENDPOINT
-              value: {{ .Values.env.TOPOS_SUBNET_ENDPOINT }}
+            - name: TOPOS_SUBNET_ENDPOINT_WS
+              value: {{ .Values.env.TOPOS_SUBNET_ENDPOINT_WS }}
+            - name: TOPOS_SUBNET_ENDPOINT_HTTP
+              value: {{ .Values.env.TOPOS_SUBNET_ENDPOINT_HTTP }}
             - name: SUBNET_REGISTRATOR_CONTRACT_ADDRESS
               value: {{ .Values.env.SUBNET_REGISTRATOR_CONTRACT_ADDRESS }}
             - name: TOPOS_CORE_PROXY_CONTRACT_ADDRESS
@@ -57,7 +59,7 @@ spec:
               value: {{ .Values.env.OTEL_SERVICE_VERSION }}
       volumes:
         - configMap:
-            name: otel-collector-conf
+            name: executor-service-otel-collector-conf
             items:
               - key: otel-collector-config
                 path: config.yaml

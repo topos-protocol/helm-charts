@@ -1,11 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: executor-service
+  name: faucet
   annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
     cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.acme.environment }}"
 spec:
-  ingressClassName: "{{ .Values.ingress.class.executorService }}"
+  ingressClassName: "{{ .Values.ingress.class.faucet }}"
   tls:
     - hosts:
         - {{ .Values.host }}
@@ -18,14 +20,38 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: executor-service
+                name: faucet
                 port:
                   name: http
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: executor-service-prometheus
+  name: faucet-otlp-receiver
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.acme.environment }}"
+spec:
+  ingressClassName: "{{ .Values.ingress.class.faucet }}"
+  tls:
+    - hosts:
+        - {{ .Values.telemetry.receivers.otlp.host }}
+      secretName: "{{ .Values.telemetry.receivers.otlp.host }}-secret-tls"
+  rules:
+    - host: {{ .Values.telemetry.receivers.otlp.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: faucet
+                port:
+                  name: otlp-receiver
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: faucet-prometheus
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.acme.environment }}"
 spec:
@@ -42,6 +68,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: executor-service
+                name: faucet
                 port:
                   name: prom-exporter

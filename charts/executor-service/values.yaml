@@ -20,10 +20,17 @@ containerPorts:
 ports:
   http: 80
 
+ingress:
+  class:
+    executorService: nginx
+    prometheusExporter: nginx
+
 telemetry:
   exporters:
     otlphttp: 
       endpoint: nobody
+    prometheus:
+      host: nobody
   logs:
     level: info
 

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: otel-collector-conf
+  name: executor-service-otel-collector-conf
   labels:
     app: opentelemetry
     component: otel-collector-conf
@@ -21,7 +21,7 @@ data:
         endpoint: {{ .Values.telemetry.exporters.otlphttp.endpoint }}
       prometheus:
         endpoint: 0.0.0.0:8889
-        namespace: default
+        namespace: executor_service
         
     processors:
       batch:
