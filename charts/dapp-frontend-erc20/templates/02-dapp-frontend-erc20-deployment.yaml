@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,6 +17,14 @@ spec:
     spec:
       restartPolicy: Always
       containers:
+        - name: otel-collector
+          image: otel/opentelemetry-collector-contrib:0.88.0
+          ports:
+            - name: otlp-receiver
+              containerPort: 4318
+          volumeMounts:
+            - name: otel-collector-config-vol
+              mountPath: /etc/otelcol-contrib
         - name: dapp-frontend-erc20
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: Always
@@ -31,3 +40,10 @@ spec:
               value: {{ .Values.env.AUTH0_CLIENT_SECRET }}
             - name: AUTH0_ISSUER_URL
               value: {{ .Values.env.AUTH0_ISSUER_URL }}
+      volumes:
+        - configMap:
+            name: dapp-frontend-erc20-otel-collector-conf
+            items:
+              - key: otel-collector-config
+                path: config.yaml
+          name: otel-collector-config-vol

@@ -18,10 +18,26 @@ containerPorts:
 ports:
   http: 80
 
+ingress:
+  class:
+    faucet: nginx
+    prometheusExporter: nginx
+
+telemetry:
+  exporters:
+    otlphttp: 
+      endpoint: nobody
+    prometheus:
+      host: nobody
+  logs:
+    level: info
+  receivers:
+    otlp:
+      host: nobody # used for the ingress
+
 env:
-  ELASTIC_APM_ENDPOINT: "${ELASTIC_APM_ENDPOINT}"
-  ELASTIC_APM_TOKEN: "${ELASTIC_APM_TOKEN}"
-  PRIVATE_KEY: "${PRIVATE_KEY}"
-  TRACING_SERVICE_NAME: "${TRACING_SERVICE_NAME}"
-  TRACING_SERVICE_VERSION: "${TRACING_SERVICE_VERSION}"
-  THROTTLER_TTL_SECONDS: "${THROTTLER_TTL_SECONDS}"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "OTEL_EXPORTER_OTLP_ENDPOINT"
+  OTEL_SERVICE_NAME: "OTEL_SERVICE_NAME"
+  OTEL_SERVICE_VERSION: "OTEL_SERVICE_VERSION"
+  PRIVATE_KEY: "PRIVATE_KEY"
+  THROTTLER_TTL_SECONDS: "THROTTLER_TTL_SECONDS"

@@ -11,6 +11,10 @@ spec:
       port: {{ .Values.ports.http }}
       targetPort: http
       protocol: TCP
+    - name: otlp-receiver
+      port: 4318
+      targetPort: otlp-receiver
+      protocol: TCP
   selector:
     app: dapp-frontend-erc20
   sessionAffinity: ClientIP

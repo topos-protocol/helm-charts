@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: executor-service-otel-collector-conf
+  labels:
+    app: opentelemetry
+    component: otel-collector-conf
+data:
+  otel-collector-config: |
+    receivers:
+      otlp:
+        protocols:
+          http:
+            endpoint: 0.0.0.0:4318
+            cors:
+              allowed_origins: ["*"]
+
+    exporters:
+      otlphttp:
+        endpoint: {{ .Values.telemetry.exporters.otlphttp.endpoint }}
+      prometheus:
+        endpoint: 0.0.0.0:8889
+        namespace: executor_service
+        
+    processors:
+      batch:
+
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlphttp]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [prometheus]
+      telemetry:
+        logs:
+          level: "{{ .Values.telemetry.logs.level }}"

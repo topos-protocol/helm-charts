@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faucet
+  labels:
+    app: faucet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: faucet
+  template:
+    metadata:
+      labels:
+        app: faucet
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: otel-collector
+          image: otel/opentelemetry-collector-contrib:0.88.0
+          ports:
+            - name: otlp-receiver
+              containerPort: 4318
+            - name: prom-exporter
+              containerPort: 8889
+          volumeMounts:
+            - name: otel-collector-config-vol
+              mountPath: /etc/otelcol-contrib
+        - name: faucet
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: {{ .Values.containerPorts.http }}
+          env:
+            - name: PRIVATE_KEY
+              value: {{ .Values.env.PRIVATE_KEY }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.env.OTEL_EXPORTER_OTLP_ENDPOINT }}
+            - name: OTEL_SERVICE_NAME
+              value: {{ .Values.env.OTEL_SERVICE_NAME }}
+            - name: OTEL_SERVICE_VERSION
+              value: {{ .Values.env.OTEL_SERVICE_VERSION }}
+            - name: THROTTLER_TTL_SECONDS
+              value: "{{ .Values.env.THROTTLER_TTL_SECONDS }}"
+      volumes:
+        - configMap:
+            name: faucet-otel-collector-conf
+            items:
+              - key: otel-collector-config
+                path: config.yaml
+          name: otel-collector-config-vol

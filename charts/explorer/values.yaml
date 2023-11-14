@@ -17,3 +17,6 @@ containerPorts:
 
 ports:
   http: 80
+
+ingress:
+  class: nginx
