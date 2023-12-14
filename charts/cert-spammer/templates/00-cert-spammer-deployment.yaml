@@ -34,8 +34,10 @@ spec:
               name: shared
           env:
             - name: RUST_LOG
-              value: info
+              value: warn
 
+            - name: TOPOS_PROOF_SIZE_BYTES
+              value: "{{ $.Values.env.TOPOS_PROOF_SIZE_BYTES }}"
             - name: TOPOS_NETWORK_SPAMMER_CERT_PER_BATCH
               value: "{{ $.Values.env.TOPOS_NETWORK_SPAMMER_CERT_PER_BATCH }}"
             - name: TOPOS_NETWORK_SPAMMER_BATCH_INTERVAL
