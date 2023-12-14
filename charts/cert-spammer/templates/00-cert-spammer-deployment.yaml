@@ -27,15 +27,14 @@ spec:
       containers:
         - name: spam
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-          args: ["network", "spam", "--target-nodes-path", "/tmp/shared/peer_nodes.json"]
+          args: ["regtest", "spam", "--target-nodes", "{{ $.Values.env.TOPOS_NETWORK_SPAMMER_TARGET_NODES }}"]
           imagePullPolicy: Always
-          volumeMounts:
-            - mountPath: /tmp/shared
-              name: shared
           env:
             - name: RUST_LOG
-              value: warn
+              value: info,topos=debug
 
+            - name: TOPOS_NETWORK_SPAMMER_TARGET_NODES
+              value: "{{ $.Values.env.TOPOS_NETWORK_SPAMMER_TARGET_NODES }}"
             - name: TOPOS_PROOF_SIZE_BYTES
               value: "{{ $.Values.env.TOPOS_PROOF_SIZE_BYTES }}"
             - name: TOPOS_NETWORK_SPAMMER_CERT_PER_BATCH
@@ -67,8 +66,3 @@ spec:
               value: "{{ $.Values.env.OTEL_EXPORTER_OTLP_COMPRESSION }}"
             - name: OTEL_EXPORTER_OTLP_TIMEOUT
               value: "{{ $.Values.env.OTEL_EXPORTER_OTLP_TIMEOUT }}"
-
-      volumes:
-      - name: shared
-        persistentVolumeClaim:
-          claimName: shared
