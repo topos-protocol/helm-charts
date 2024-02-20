@@ -1,3 +1,38 @@
+{{ $sa := lookup "v1" "ServiceAccount" .Release.Namespace "s3-sa" }}
+{{ if not $sa }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: {{ $.Values.s3.role }}
+  name: s3-sa
+{{ end }}
+---
+{{ $svc := lookup "v1" "Service" .Release.Namespace "tce" }}
+{{ if not $svc }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: tce
+spec:
+  selector:
+    stack: tce
+  ports:
+  - name: grpc
+    port: {{ $.Values.ports.grpc }}
+    protocol: TCP
+  - name: p2p
+    port: {{ $.Values.ports.p2p }}
+    protocol: TCP
+  - name: graphql
+    port: {{ $.Values.ports.graphql }}
+    protocol: TCP
+  - name: metrics
+    port: {{ $.Values.ports.metrics }}
+    protocol: TCP
+  clusterIP: None
+{{ end }}
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -71,7 +106,7 @@ spec:
         - name: init
           image: amazon/aws-cli:latest
           command: ["/bin/sh","-c"]
-          args: ["rm -rf /data/node/${HOSTNAME} || true; aws s3 cp s3://bnet-268276581508/genesis.json /data/subnet/topos/; aws s3 cp --recursive s3://bnet-268276581508/node/${HOSTNAME} /data/node/${HOSTNAME}"]
+          args: ["rm -rf /data/node/${HOSTNAME} || true; aws s3 cp {{ $.Values.s3.bucket }}/genesis.json /data/subnet/topos/; aws s3 cp --recursive {{ $.Values.s3.bucket }}/node/${HOSTNAME} /data/node/${HOSTNAME}"]
           volumeMounts:
             - mountPath: /data/node/
               name: data

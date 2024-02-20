@@ -6,6 +6,10 @@ replicas: 1
 # mode can be (boot | peer)
 mode: boot
 
+s3:
+  role: nobody
+  bucket: s3://nobody
+
 ports:
   grpc: 1340
   p2p: 9090
