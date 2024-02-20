@@ -22,6 +22,5 @@ image:
 
 env:
   TOPOS_HOME: /data
-  TOPOS_POLYGON_EDGE_BIN_PATH: /usr/local/bin
   TOPOS_LOG_FORMAT: json
   RUST_LOG: info,topos=debug,topos::edge=error

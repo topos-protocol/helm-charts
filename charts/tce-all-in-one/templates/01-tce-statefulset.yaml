@@ -83,8 +83,10 @@ spec:
             - mountPath: /data/subnet/topos/
               name: shared
           env:
+            - name: RUST_LOG
+              value: {{ $.Values.env.RUST_LOG }}
             - name: TOPOS_HOME
-              value: /data/
+              value: {{ $.Values.env.TOPOS_HOME }}
             - name: HOSTNAME
               valueFrom:
                 fieldRef:
@@ -106,7 +108,7 @@ spec:
         - name: init
           image: amazon/aws-cli:latest
           command: ["/bin/sh","-c"]
-          args: ["rm -rf /data/node/${HOSTNAME} || true; aws s3 cp {{ $.Values.s3.bucket }}/genesis.json /data/subnet/topos/; aws s3 cp --recursive {{ $.Values.s3.bucket }}/node/${HOSTNAME} /data/node/${HOSTNAME}"]
+          args: ["aws s3 cp {{ $.Values.s3.bucket }}/genesis-1-4.json /data/subnet/topos/genesis.json; aws s3 cp --recursive {{ $.Values.s3.bucket }}/node/${HOSTNAME} /data/node/${HOSTNAME}"]
           volumeMounts:
             - mountPath: /data/node/
               name: data
