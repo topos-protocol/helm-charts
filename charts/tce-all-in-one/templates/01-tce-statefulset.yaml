@@ -80,8 +80,6 @@ spec:
           volumeMounts:
             - mountPath: /data/node/
               name: data
-            - mountPath: /data/subnet/topos/
-              name: shared
           env:
             - name: RUST_LOG
               value: {{ $.Values.env.RUST_LOG }}
@@ -112,12 +110,6 @@ spec:
           volumeMounts:
             - mountPath: /data/node/
               name: data
-            - mountPath: /data/subnet/topos/
-              name: shared
-      volumes:
-      - name: shared
-        persistentVolumeClaim:
-          claimName: shared
   volumeClaimTemplates:
   - metadata:
       name: data
