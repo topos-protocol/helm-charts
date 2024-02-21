@@ -47,6 +47,9 @@ spec:
       labels:
         app: {{ $.Values.role }}
         stack: tce
+      annotations:
+        prometheus.io/scrape_port: "{{ $.Values.ports.metrics }}"
+        prometheus.io/scrape: "true"
     spec:
       serviceAccountName: {{ $.Values.service_account.name }}
       containers:
