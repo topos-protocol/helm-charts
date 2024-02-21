@@ -1,22 +1,17 @@
-{{ $sa := lookup "v1" "ServiceAccount" .Release.Namespace "s3-sa" }}
-{{ if not $sa }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   annotations:
-    eks.amazonaws.com/role-arn: {{ $.Values.s3.role }}
-  name: s3-sa
-{{ end }}
+    eks.amazonaws.com/role-arn: {{ $.Values.service_account.role }}
+  name: {{ $.Values.service_account.name }}
 ---
-{{ $svc := lookup "v1" "Service" .Release.Namespace "tce" }}
-{{ if not $svc }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: tce
+  name: {{ $.Values.role }}
 spec:
   selector:
-    stack: tce
+    app: {{ $.Values.role }}
   ports:
   - name: grpc
     port: {{ $.Values.ports.grpc }}
@@ -31,54 +26,37 @@ spec:
     port: {{ $.Values.ports.metrics }}
     protocol: TCP
   clusterIP: None
-{{ end }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ $.Values.mode }}
+  name: {{ $.Values.role }}
   labels:
-    app: {{ $.Values.mode }}
+    app: {{ $.Values.role }}
     stack: tce
 spec:
-  serviceName: tce
+  serviceName: {{ $.Values.role }}
   podManagementPolicy: "Parallel"
   replicas: {{ $.Values.replicas }}
   selector:
     matchLabels:
-      app: {{ $.Values.mode }}
+      app: {{ $.Values.role }}
       stack: tce
   template:
     metadata:
       labels:
-        app: {{ $.Values.mode }}
+        app: {{ $.Values.role }}
         stack: tce
     spec:
-      serviceAccountName: s3-sa
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: workload
-                operator: In
-                values:
-                - topos
-      tolerations:
-        - key: "workload"
-          operator: "Equal"
-          value: "topos"
-          effect: "NoExecute"
+      serviceAccountName: {{ $.Values.service_account.name }}
       containers:
-        - name: {{ $.Values.mode }}
+        - name: {{ $.Values.role }}
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
           imagePullPolicy: Always
           command: ["topos"]
           args: ["node", "up", "--name", "$(HOSTNAME)", "--no-edge-process"]
-          # command: ["/bin/sh","-c"]
-          # args: ["tail -f /dev/null"]
           volumeMounts:
-            - mountPath: /data/node/
+            - mountPath: /data/
               name: data
           env:
             - name: RUST_LOG
@@ -108,8 +86,33 @@ spec:
           command: ["/bin/sh","-c"]
           args: ["aws s3 cp {{ $.Values.s3.bucket }}/genesis-1-4.json /data/subnet/topos/genesis.json; aws s3 cp --recursive {{ $.Values.s3.bucket }}/node/${HOSTNAME} /data/node/${HOSTNAME}"]
           volumeMounts:
-            - mountPath: /data/node/
+            - mountPath: /data/
               name: data
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: workload
+                operator: In
+                values:
+                - topos
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: stack
+                    operator: In
+                    values:
+                      - tce
+              topologyKey: "kubernetes.io/hostname"
+      tolerations:
+        - key: "workload"
+          operator: "Equal"
+          value: "topos"
+          effect: "NoExecute"
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
   volumeClaimTemplates:
   - metadata:
       name: data

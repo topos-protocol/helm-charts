@@ -3,12 +3,15 @@
 # Declare variables to be passed into your templates.
 
 replicas: 1
-# mode can be (boot | peer)
-mode: boot
+# mode can be (fullnode | validator)
+role: fullnode
 
 s3:
-  role: nobody
   bucket: s3://nobody
+
+service_account:
+  name: nobody
+  role: nobody
 
 ports:
   grpc: 1340
