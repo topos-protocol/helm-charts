@@ -55,7 +55,6 @@ spec:
       containers:
         - name: {{ $.Values.role }}
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-          imagePullPolicy: Always
           command: ["topos"]
           args: ["node", "up", "--name", "$(HOSTNAME)", "--no-edge-process"]
           volumeMounts:
@@ -66,6 +65,10 @@ spec:
               value: {{ $.Values.env.RUST_LOG }}
             - name: TOPOS_HOME
               value: {{ $.Values.env.TOPOS_HOME }}
+            - name: TOPOS_RUN_ID
+              value: "{{ $.Values.env.TOPOS_RUN_ID }}"
+            - name: TOPOS_RUN_NUMBER
+              value: "{{ $.Values.env.TOPOS_RUN_NUMBER }}"
             - name: HOSTNAME
               valueFrom:
                 fieldRef:
@@ -87,7 +90,7 @@ spec:
         - name: init
           image: amazon/aws-cli:latest
           command: ["/bin/sh","-c"]
-          args: ["aws s3 cp {{ $.Values.s3.bucket }}/genesis-1-4.json /data/subnet/topos/genesis.json; aws s3 cp --recursive {{ $.Values.s3.bucket }}/node/${HOSTNAME} /data/node/${HOSTNAME}"]
+          args: ["aws s3 cp {{ $.Values.s3.genesis_file }} /data/subnet/topos/genesis.json; aws s3 cp --recursive {{ $.Values.s3.config_dir }}/${HOSTNAME} /data/node/${HOSTNAME}"]
           volumeMounts:
             - mountPath: /data/
               name: data
