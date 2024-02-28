@@ -24,6 +24,16 @@ entries:
   cert-spammer:
   - apiVersion: v2
     appVersion: main
+    created: "2024-02-28T14:03:23.922004518Z"
+    description: A Helm chart for cert-spammer
+    digest: 441d21ef73b092e64a4ffc634bc062781edbb33af4dbda59cb48cf2e1b9cce08
+    name: cert-spammer
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/cert-spammer-0.2.0/cert-spammer-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: main
     created: "2023-06-05T13:15:43.808446382Z"
     description: A Helm chart for cert-spammer
     digest: feb520b735c4be42fdd78be57c86d1b462f714463e64c6bd0cf3762c8a19fdfe
@@ -310,6 +320,16 @@ entries:
   tce-all-in-one:
   - apiVersion: v2
     appVersion: main
+    created: "2024-02-28T14:03:24.063193458Z"
+    description: A Helm chart for TCE
+    digest: 34ba633eba8ad0c93db3366a855ee1d0f3908cb5feeb2fed6b06a4bce55add84
+    name: tce-all-in-one
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/tce-all-in-one-0.3.0/tce-all-in-one-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: main
     created: "2023-06-30T18:34:27.677052438Z"
     description: A Helm chart for TCE
     digest: d6fbea073d390f8b9ba2b97ff67a07d532d0c1f0912441cd582ed4b8eb6eeece
@@ -400,4 +420,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2023-11-14T18:42:37.865528278Z"
+generated: "2024-02-28T14:03:24.063364757Z"
