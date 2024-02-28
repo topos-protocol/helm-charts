@@ -1,0 +1,132 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: {{ $.Values.service_account.role }}
+  name: {{ $.Values.service_account.name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Values.role }}
+spec:
+  selector:
+    app: {{ $.Values.role }}
+  ports:
+  - name: grpc
+    port: {{ $.Values.ports.grpc }}
+    protocol: TCP
+  - name: p2p
+    port: {{ $.Values.ports.p2p }}
+    protocol: TCP
+  - name: graphql
+    port: {{ $.Values.ports.graphql }}
+    protocol: TCP
+  - name: metrics
+    port: {{ $.Values.ports.metrics }}
+    protocol: TCP
+  clusterIP: None
+---
+{{- $name := $.Values.env.TOPOS_RUN_ID | required "$.Values.env.TOPOS_RUN_ID is required." -}}
+{{- $name := $.Values.env.TOPOS_RUN_NUMBER | required "$.Values.env.TOPOS_RUN_NUMBER is required." -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $.Values.role }}
+  labels:
+    app: {{ $.Values.role }}
+    stack: tce
+spec:
+  serviceName: {{ $.Values.role }}
+  podManagementPolicy: "Parallel"
+  replicas: {{ $.Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $.Values.role }}
+      stack: tce
+  template:
+    metadata:
+      labels:
+        app: {{ $.Values.role }}
+        stack: tce
+      annotations:
+        prometheus.io/port: "{{ $.Values.ports.metrics }}"
+        prometheus.io/scrape: "true"
+    spec:
+      serviceAccountName: {{ $.Values.service_account.name }}
+      containers:
+        - name: {{ $.Values.role }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          command: ["topos"]
+          args: ["node", "up", "--name", "$(HOSTNAME)", "--no-edge-process"]
+          volumeMounts:
+            - mountPath: /data/
+              name: data
+          env:
+            - name: RUST_LOG
+              value: {{ $.Values.env.RUST_LOG }}
+            - name: TOPOS_HOME
+              value: {{ $.Values.env.TOPOS_HOME }}
+            - name: TOPOS_RUN_ID
+              value: "{{ $.Values.env.TOPOS_RUN_ID }}"
+            - name: TOPOS_RUN_NUMBER
+              value: "{{ $.Values.env.TOPOS_RUN_NUMBER }}"
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - name: grpc
+              containerPort: {{ $.Values.ports.grpc }}
+              protocol: TCP
+            - name: p2p
+              containerPort: {{ $.Values.ports.p2p }}
+              protocol: TCP
+            - name: graphql
+              containerPort: {{ $.Values.ports.graphql }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ $.Values.ports.metrics }}
+              protocol: TCP
+      initContainers:
+        - name: init
+          image: amazon/aws-cli:latest
+          command: ["/bin/sh","-c"]
+          args: ["aws s3 cp {{ $.Values.s3.genesis_file }} /data/subnet/topos/genesis.json; aws s3 cp --recursive {{ $.Values.s3.config_dir }}/${HOSTNAME} /data/node/${HOSTNAME}"]
+          volumeMounts:
+            - mountPath: /data/
+              name: data
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: workload
+                operator: In
+                values:
+                - topos
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: stack
+                    operator: In
+                    values:
+                      - tce
+              topologyKey: "kubernetes.io/hostname"
+      tolerations:
+        - key: "workload"
+          operator: "Equal"
+          value: "topos"
+          effect: "NoExecute"
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOncePod" ]
+      storageClassName: "gp2"
+      resources:
+        requests:
+          storage: 1Gi
