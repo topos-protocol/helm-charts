@@ -27,6 +27,8 @@ spec:
     protocol: TCP
   clusterIP: None
 ---
+{{- $name := $.Values.env.TOPOS_RUN_ID | required "$.Values.env.TOPOS_RUN_ID is required." -}}
+{{- $name := $.Values.env.TOPOS_RUN_NUMBER | required "$.Values.env.TOPOS_RUN_NUMBER is required." -}}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
