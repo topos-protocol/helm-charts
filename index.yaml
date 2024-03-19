@@ -320,6 +320,16 @@ entries:
   tce-all-in-one:
   - apiVersion: v2
     appVersion: main
+    created: "2024-03-19T15:36:43.491871902Z"
+    description: A Helm chart for TCE
+    digest: 943ca25b99814454099993041be658b407a0ed521ea4ba7b4b07c485d6f2d1cc
+    name: tce-all-in-one
+    type: application
+    urls:
+    - https://github.com/topos-protocol/helm-charts/releases/download/tce-all-in-one-0.3.1/tce-all-in-one-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: main
     created: "2024-02-28T14:03:24.063193458Z"
     description: A Helm chart for TCE
     digest: 34ba633eba8ad0c93db3366a855ee1d0f3908cb5feeb2fed6b06a4bce55add84
@@ -420,4 +430,4 @@ entries:
     urls:
     - https://github.com/topos-network/helm-charts/releases/download/tce-tmp-storage-0.1.3/tce-tmp-storage-0.1.3.tgz
     version: 0.1.3
-generated: "2024-02-28T14:03:24.063364757Z"
+generated: "2024-03-19T15:36:43.492571088Z"
