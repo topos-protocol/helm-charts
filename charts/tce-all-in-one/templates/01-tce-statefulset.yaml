@@ -57,6 +57,7 @@ spec:
       containers:
         - name: {{ $.Values.role }}
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          imagePullPolicy: Always
           command: ["topos"]
           args: ["node", "up", "--name", "$(HOSTNAME)", "--no-edge-process"]
           volumeMounts:
