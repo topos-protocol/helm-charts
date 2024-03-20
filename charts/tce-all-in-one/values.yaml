@@ -27,5 +27,6 @@ image:
 env:
   TOPOS_HOME: /data
   RUST_LOG: info,topos=debug,topos::edge=error
+  TOPOS_LOG_FORMAT: json
   TOPOS_RUN_ID:
   TOPOS_RUN_NUMBER:
