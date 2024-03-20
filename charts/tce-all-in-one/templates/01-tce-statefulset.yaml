@@ -72,6 +72,8 @@ spec:
               value: "{{ $.Values.env.TOPOS_RUN_ID }}"
             - name: TOPOS_RUN_NUMBER
               value: "{{ $.Values.env.TOPOS_RUN_NUMBER }}"
+            - name: TOPOS_LOG_FORMAT
+              value: "{{ $.Values.env.TOPOS_LOG_FORMAT }}"
             - name: HOSTNAME
               valueFrom:
                 fieldRef:
